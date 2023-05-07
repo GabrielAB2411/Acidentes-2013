@@ -17,7 +17,7 @@ export default function Loader({ loading }: LoaderProps) {
         <div className="grid h-screen place-items-center bg-gradient-to-r from-zinc-700 to-zinc-950">
             <SyncLoader
                 color="#b0b0b0"
-                size={100}
+                size={60}
                 loading={loading}
                 cssOverride={override}
             />

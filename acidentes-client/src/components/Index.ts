@@ -1,1 +1,7 @@
 export * from "./Chart/Chart"
+export * from "./Datatable/Datatable"
+export * from "./Error/Error"
+export * from "./Loader/Loader"
+export * from "./Select/Select"
+export * from "./YoutubePlayer/YoutubePlayer"
+export * from "./Profile/Profile"
