@@ -1,110 +1,33 @@
-import { TableColumn } from "react-data-table-component";
+import React from "react";
+import { AxiosError } from "axios";
+import Aos from "aos";
 import getAccidentsData from "../services/GetAccidentsData";
-
-interface DataRow {
-    id: number,
-    text: string,
-}
+import { useQuery } from "react-query";
+import { Data } from "../types/Data";
 
 export function useDashboard() {
+    const { isLoading, data, error } = useQuery<Data, AxiosError>(
+        {
+            queryKey: ['getAccidentsData'],
+            queryFn: async () => getAccidentsData(1),
+            staleTime: 120000,
+            refetchOnWindowFocus: false,
+            enabled: true,
+        })
+        
+    const accidentsWithFatalVictimsCount = data && data[0]?.accidentsWithFatalVictimsCount;
+    const accidentsWithInjuredVictimsCount = data && data[0]?.accidentsWithInjuredVictimsCount;
+    const accidentsWithoutVictimsCount = data && data[0]?.accidentsWithoutVictimsCount;
 
-    const datatableColumns: TableColumn<DataRow>[] = [
-        {
-            name: "ID",
-            selector: row => row.id,
-        },
-        {
-            name: "TEXT",
-            selector: row => row.text,
-        },
-    ]
-
-    const datatableInfo = [
-        {
-            id: 1,
-            text: "Teste1"
-        },
-        {
-            id: 2,
-            text: "Teste2"
-        },
-        {
-            id: 3,
-            text: "Teste3"
-        },
-        {
-            id: 4,
-            text: "Teste4"
-        },
-        {
-            id: 5,
-            text: "Teste5"
-        },
-        {
-            id: 6,
-            text: "Teste6"
-        },
-        {
-            id: 7,
-            text: "Teste7"
-        },
-        {
-            id: 8,
-            text: "Teste8"
-        },
-        {
-            id: 9,
-            text: "Teste9"
-        },
-        {
-            id: 10,
-            text: "Teste10"
-        },
-        {
-            id: 11,
-            text: "Teste11"
-        },
-        {
-            id: 12,
-            text: "Teste12"
-        },
-        {
-            id: 13,
-            text: "Teste13"
-        },
-        {
-            id: 14,
-            text: "Teste14"
-        },
-        {
-            id: 15,
-            text: "Teste15"
-        },
-        {
-            id: 16,
-            text: "Teste16"
-        },
-        {
-            id: 17,
-            text: "Teste17"
-        },
-        {
-            id: 18,
-            text: "Teste18"
-        },
-        {
-            id: 19,
-            text: "Teste19"
-        },
-        {
-            id: 20,
-            text: "Teste20"
-        },
-    ]
+    React.useEffect(() => {
+        Aos.init({ duration: 2500 })
+    }, [])
 
     return {
-        getAccidentsData,
-        datatableInfo,
-        datatableColumns
+        accidentsWithFatalVictimsCount,
+        accidentsWithInjuredVictimsCount,
+        accidentsWithoutVictimsCount,
+        isLoading,
+        error,
     }
 }

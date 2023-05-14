@@ -1,16 +1,26 @@
-import { useQuery } from "react-query";
-import DonutChart from "../components/Chart/Chart";
 import { useDashboard } from "../hooks/UseDashboard";
-import Loader from "../components/Loader/Loader";
-import Error from "../components/Error/Error";
-import { AxiosError } from "axios";
-import Datatable from "../components/Datatable/Datatable";
-import YoutubePlayer from "../components/YoutubePlayer/YoutubePlayer";
-import Profile from "../components/Profile/Profile";
+import {
+    Card,
+    Chart,
+    Container,
+    Datatable,
+    Error,
+    Loader,
+    MainView,
+    Profile,
+    Title,
+    Wrapper,
+    YoutubePlayer
+} from "../components/Index";
+import "aos/dist/aos.css"
 
 export default function Index() {
-    const { getAccidentsData, datatableColumns, datatableInfo } = useDashboard()
-    const { isLoading, data, error } = useQuery<any, AxiosError>("getAccidentsData", getAccidentsData, { staleTime: 120000 })
+    const {
+        accidentsWithFatalVictimsCount,
+        accidentsWithInjuredVictimsCount,
+        accidentsWithoutVictimsCount,
+        isLoading,
+        error } = useDashboard()
 
     if (isLoading) return <Loader loading={isLoading} />
 
@@ -18,27 +28,29 @@ export default function Index() {
 
     return (
         <>
-            <div className="bg-gradient-to-r from-zinc-700 to-zinc-950 flex justify-center text-center">
-                <div className="grid grid-cols-1 gap-24 p-24">
-                    <div className="grid grid-cols-1 gap-12 p-12 border border-white rounded-2xl">
-                        <h1 className="font-bold text-white text-3xl">Gráfico de acidentes em rodovias no ano de 2013</h1>
-                        <DonutChart />
-                    </div>
-                    <div className="grid grid-cols-1 gap-12 p-12 border border-white rounded-2xl">
-                        <h1 className="font-bold text-white text-3xl">Registro de todos os acidentes em redovias no ano de 2013</h1>
-                        <div className="text-left">
-                            <Datatable
-                                columns={datatableColumns}
-                                data={datatableInfo}
-                            />
+            <Container>
+                <Wrapper>
+                    <MainView/>
+                    <Card>
+                        <Title>Taxa de mortalidade de acidentes classificados</Title>
+                        <Chart
+                            accidentsWithFatalVictimsCount={accidentsWithFatalVictimsCount || 1}
+                            accidentsWithInjuredVictimsCount={accidentsWithInjuredVictimsCount || 1}
+                            accidentsWithoutVictimsCount={accidentsWithoutVictimsCount || 1}
+                        />
+                    </Card>
+                    <Card>
+                        <Title>Registro de todos os acidentes em rodovias no ano de 2013</Title>
+                        <div>
+                            <Datatable/>
                         </div>
-                    </div>
-                    <div className="grid grid-cols-1 gap-12 p-12 border border-white rounded-2xl">
-                        <h1 className="font-bold text-white text-3xl">Vídeo de apresentação</h1>
-                        <YoutubePlayer url="https://www.youtube.com/watch?v=XSbMSSdGSdg&t=3854s" />
-                    </div>
-                    <div className="grid grid-cols-1 gap-12 p-12 border border-white rounded-2xl">
-                        <h1 className="font-bold text-white text-3xl">Participantes</h1>
+                    </Card>
+                    <Card>
+                        <Title>Vídeo de apresentação</Title>
+                        <YoutubePlayer url="https://www.youtube.com/watch?v=UqKcSKUpDLQ" />
+                    </Card>
+                    <Card>
+                        <Title>Participantes</Title>
                         <div className="grid grid-cols-3">
                             <Profile
                                 name="Gabriel Barbosa"
@@ -59,12 +71,12 @@ export default function Index() {
                                 imgUrl="https://media.licdn.com/dms/image/C4D03AQH9V5bew7kO3Q/profile-displayphoto-shrink_100_100/0/1660705233689?e=1689206400&v=beta&t=soG7l0BpG1mHavmr9lrE6BDI_F1rHwl1uI1YoYCZxgE"
                                 linkedinUrl="https://www.linkedin.com/in/braz-gustavo/"
                                 githubUrl=""
-                                role="RA: 0812200"
+                                role="RA: 081220001"
                             />
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </Card>
+                </Wrapper>
+            </Container>
         </>
     )
 }

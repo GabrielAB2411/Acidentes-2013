@@ -1,17 +1,21 @@
 import { ApexOptions } from "apexcharts";
 import ApexChart from "react-apexcharts";
 
-export default function DonutChart() {
+type ChartProps = {
+    accidentsWithFatalVictimsCount: number 
+    accidentsWithInjuredVictimsCount: number
+    accidentsWithoutVictimsCount: number
+}
+
+export default function Chart({accidentsWithFatalVictimsCount, accidentsWithInjuredVictimsCount, accidentsWithoutVictimsCount}: ChartProps) {
     const options: ApexOptions = {
-        series: [2, 4, 5],
+        series: [accidentsWithFatalVictimsCount, accidentsWithInjuredVictimsCount, accidentsWithoutVictimsCount],
         labels: ["Com vítimas fatais", "Com vítimas feridas", "Sem vítimas"],
-        colors: ["#b3b3b3", "#555555", "#29292a"],
+        colors: ["#0A001F", "#001343", "#01001F"],
         legend: {
             position: "bottom",
             horizontalAlign: "center",  
-            fontSize: "20px",
-            fontFamily: "bold",
-            fontWeight: 400,
+            fontSize: "20rem",
             labels: {
                 colors: "#fff",
             },
@@ -25,8 +29,7 @@ export default function DonutChart() {
                         total: {
                             show: true,
                             showAlways: true,
-                            fontSize: "24px",
-                            fontFamily: "bold",
+                            fontSize: "2rem",
                             color: "#fff",
                         }
                     }
@@ -40,7 +43,7 @@ export default function DonutChart() {
             options={options} 
             series={options.series}
             type="donut"
-            height="400px"
+            height="600px"
         />
     )
 }

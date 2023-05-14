@@ -4,13 +4,14 @@ type YoutubePlayerProps = {
     url: string
 }
 
-export default function YoutubePlayer({url}: YoutubePlayerProps) {
+export default function YoutubePlayer({ url }: YoutubePlayerProps) {
     return (
         <ReactPlayer
-            width={850}
-            height={500}
+            width="100%"
+            height="500px"
             url={url}
             controls
+            style={{overflow: "hidden", borderRadius: "20px"}}
         />
     )
 }

@@ -1,11 +1,4 @@
-import { CSSProperties } from "react";
-import { SyncLoader } from "react-spinners";
-
-const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-};
+import { ClipLoader } from "react-spinners";
 
 type LoaderProps = {
     loading: boolean
@@ -14,12 +7,12 @@ type LoaderProps = {
 export default function Loader({ loading }: LoaderProps) {
 
     return (
-        <div className="grid h-screen place-items-center bg-gradient-to-r from-zinc-700 to-zinc-950">
-            <SyncLoader
+        <div className="grid h-screen place-items-center bg-gradient-to-t from-indigo-900 to-black">
+            <ClipLoader
                 color="#b0b0b0"
-                size={60}
+                size={80}
                 loading={loading}
-                cssOverride={override}
+                speedMultiplier={0.5}
             />
         </div>
     )
