@@ -1,12 +1,13 @@
 <h1 align="center"> 
 <br>
-    <img src="./Assets/Title.png" width="270">
+    <img src="./Assets/Title.PNG" width="270">
 <br>
 <br>
 Dashboard de acidentes rodoviários de 2013
 </h1>
 
 <hr />
+
 ## :information_source: Sobre
 
 <br>
