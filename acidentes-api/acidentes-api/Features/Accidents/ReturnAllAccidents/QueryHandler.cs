@@ -17,25 +17,19 @@ namespace acidentes_api.Features.Accidents.ReturnAllAccidents
 
             public IEnumerable<dynamic> Handle(int page)
             {
-                int dataLength = _context.DatatranNormalizados.Length();
+                int dataCount = _context.DatatranNormalizados.Count();
 
                 int accidentsWithFatalVictims = _context.DatatranNormalizados
-                    .AsNoTracking()
                     .Where(d => d.ClassificacaoAcidenteId == 17)
-                    .ToList()
-                    .Length();
+                    .Count();
 
                 int accidentsWithInjuredVictims = _context.DatatranNormalizados
-                    .AsNoTracking()
                     .Where(d => d.ClassificacaoAcidenteId == 18)
-                    .ToList()
-                    .Length();
+                    .Count();
 
                 int accidentsWithoutVictims = _context.DatatranNormalizados
-                    .AsNoTracking()
                     .Where(d => d.ClassificacaoAcidenteId == 20)
-                    .ToList()
-                    .Length();
+                    .Count();
 
 
                 var accidents = _context.DatatranNormalizados
@@ -62,7 +56,7 @@ namespace acidentes_api.Features.Accidents.ReturnAllAccidents
 
                 yield return new { 
                     accidents,
-                    size = dataLength,
+                    size = dataCount,
                     accidentsWithFatalVictimsCount = accidentsWithFatalVictims,
                     accidentsWithInjuredVictimsCount = accidentsWithInjuredVictims,
                     accidentsWithoutVictimsCount = accidentsWithoutVictims

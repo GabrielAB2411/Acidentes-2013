@@ -1,17 +1,5 @@
 import { useDashboard } from "../hooks/UseDashboard";
-import {
-    Card,
-    Chart,
-    Container,
-    Datatable,
-    Error,
-    Loader,
-    MainView,
-    Profile,
-    Title,
-    Wrapper,
-    YoutubePlayer
-} from "../components/Index";
+import { Card, Chart, Container, Datatable, Error, Loader, MainView, Profile, Title, Wrapper, YoutubePlayer } from "../components/Index";
 import "aos/dist/aos.css"
 
 export default function Index() {
