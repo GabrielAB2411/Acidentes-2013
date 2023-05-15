@@ -20,15 +20,16 @@ namespace acidentes_api.Features.Accidents.ReturnAllAccidents
                 int dataCount = _context.DatatranNormalizados.Count();
 
                 int accidentsWithFatalVictims = _context.DatatranNormalizados
-                    .Where(d => d.ClassificacaoAcidenteId == 17)
+                    .Where(d => d.ClassificacaoAcidente.Classificacao == "Com Vítimas Fatais")
                     .Count();
 
+
                 int accidentsWithInjuredVictims = _context.DatatranNormalizados
-                    .Where(d => d.ClassificacaoAcidenteId == 18)
+                    .Where(d => d.ClassificacaoAcidente.Classificacao == "Com Vítimas Feridas")
                     .Count();
 
                 int accidentsWithoutVictims = _context.DatatranNormalizados
-                    .Where(d => d.ClassificacaoAcidenteId == 20)
+                    .Where(d => d.ClassificacaoAcidente.Classificacao == "Sem Vítimas")
                     .Count();
 
 
