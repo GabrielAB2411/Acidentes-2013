@@ -1,14 +1,15 @@
-import { useDashboard } from "../hooks/UseDashboard";
+import React from "react";
+import Aos from "aos";
 import { Card, Chart, Container, Datatable, Error, Loader, MainView, Profile, Title, Wrapper, YoutubePlayer } from "../components/Index";
 import "aos/dist/aos.css"
+import useFetchAccidents from "../services/GetAccidentsData";
 
 export default function Index() {
-    const {
-        accidentsWithFatalVictimsCount,
-        accidentsWithInjuredVictimsCount,
-        accidentsWithoutVictimsCount,
-        isLoading,
-        error } = useDashboard()
+    React.useEffect(() => {
+        Aos.init({ duration: 2500 })
+    }, [])
+
+    const {data, isLoading, error} = useFetchAccidents(1)
 
     if (isLoading) return <Loader loading={isLoading} />
 
@@ -22,9 +23,9 @@ export default function Index() {
                     <Card>
                         <Title>Taxa de mortalidade de acidentes classificados</Title>
                         <Chart
-                            accidentsWithFatalVictimsCount={accidentsWithFatalVictimsCount || 1}
-                            accidentsWithInjuredVictimsCount={accidentsWithInjuredVictimsCount || 1}
-                            accidentsWithoutVictimsCount={accidentsWithoutVictimsCount || 1}
+                            accidentsWithFatalVictimsCount={data && data[0]?.accidentsWithFatalVictimsCount || 1}
+                            accidentsWithInjuredVictimsCount={data && data[0]?.accidentsWithInjuredVictimsCount || 1}
+                            accidentsWithoutVictimsCount={data && data[0]?.accidentsWithoutVictimsCount || 1}
                         />
                     </Card>
                     <Card>
@@ -52,7 +53,7 @@ export default function Index() {
                                 imgUrl="https://media.licdn.com/dms/image/C4E03AQEEASYJT-pb7w/profile-displayphoto-shrink_100_100/0/1648824438936?e=1689206400&v=beta&t=214DBmAoIeNEprN0818Zkr2aMCKJ9W3S1b8sQiWIyCU"
                                 linkedinUrl="https://www.linkedin.com/in/ruancfaccin/"
                                 githubUrl=""
-                                role="RA: 0812200"
+                                role="RA: 081220029"
                             />
                             <Profile
                                 name="Gustavo Braz"

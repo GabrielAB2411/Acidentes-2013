@@ -11,7 +11,7 @@ export default function Chart({accidentsWithFatalVictimsCount, accidentsWithInju
     const options: ApexOptions = {
         series: [accidentsWithFatalVictimsCount, accidentsWithInjuredVictimsCount, accidentsWithoutVictimsCount],
         labels: ["Com vítimas fatais", "Com vítimas feridas", "Sem vítimas"],
-        colors: ["#0A001F", "#001343", "#01001F"],
+        colors: ["#8844FF", "#00115D", "#004BD8"],
         legend: {
             position: "bottom",
             horizontalAlign: "center",  

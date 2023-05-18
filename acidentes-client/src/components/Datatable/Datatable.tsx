@@ -1,10 +1,8 @@
 import React from "react";
 import DataTable, { TableStyles } from "react-data-table-component"
 import { TableColumn } from "react-data-table-component";
-import { useQuery } from "react-query";
-import getAccidentsData from "../../services/GetAccidentsData";
-import { Data } from "../../types/Data";
 import { Accidents } from "../../types/Accidents";
+import useFetchAccidents from "../../services/GetAccidentsData";
 
 type DatatableInfoProps = {
     estado: string,
@@ -110,15 +108,7 @@ const paginationComponentOptions = {
 export default function Datatable() {
     const [currentPage, setCurrentPage] = React.useState(1);
 
-    const { data } = useQuery<Data>(
-        {
-            queryKey: ['getNextAccidentsData', currentPage],
-            queryFn: async () => getAccidentsData(currentPage),
-            staleTime: 1000,
-            refetchOnWindowFocus: false,
-            enabled: true,
-            keepPreviousData: true,
-        })
+    const {data, isLoading} = useFetchAccidents(currentPage)
 
     const datatableInfo: DatatableInfoProps = []
 
@@ -141,6 +131,7 @@ export default function Datatable() {
             columns={datatableColumns}
             data={datatableInfo}
             highlightOnHover
+            progressPending={isLoading}
             pagination
             paginationServer
             paginationTotalRows={data && data[0].size}
