@@ -2,7 +2,7 @@ import React from "react";
 import DataTable, { TableStyles } from "react-data-table-component"
 import { TableColumn } from "react-data-table-component";
 import { Accidents } from "../../types/Accidents";
-import useFetchAccidents from "../../services/GetAccidentsData";
+import useFetchAccidents from "../../hooks/useFetchAccidents";
 
 type DatatableInfoProps = {
     estado: string,

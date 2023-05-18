@@ -2,7 +2,7 @@ import React from "react";
 import Aos from "aos";
 import { Card, Chart, Container, Datatable, Error, Loader, MainView, Profile, Title, Wrapper, YoutubePlayer } from "../components/Index";
 import "aos/dist/aos.css"
-import useFetchAccidents from "../services/GetAccidentsData";
+import useFetchAccidents from "../hooks/useFetchAccidents";
 
 export default function Index() {
     React.useEffect(() => {
