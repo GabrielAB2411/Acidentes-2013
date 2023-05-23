@@ -5,6 +5,7 @@ import "aos/dist/aos.css"
 import useFetchAccidents from "../hooks/useFetchAccidents";
 
 export default function Index() {
+
     React.useEffect(() => {
         Aos.init({ duration: 2500 })
     }, [])
@@ -35,8 +36,8 @@ export default function Index() {
                         </div>
                     </Card>
                     <Card>
-                        <Title>Vídeo de apresentação</Title>
-                        <YoutubePlayer url="https://www.youtube.com/watch?v=UqKcSKUpDLQ" />
+                        <Title>Vídeo da criação e importação da base de dados utilizada no projeto</Title>
+                        <YoutubePlayer url="https://www.youtube.com/watch?v=XJMk6ky9lNk" />
                     </Card>
                     <Card>
                         <Title>Participantes</Title>
@@ -52,14 +53,14 @@ export default function Index() {
                                 name="Ruan Faccin"
                                 imgUrl="https://media.licdn.com/dms/image/C4E03AQEEASYJT-pb7w/profile-displayphoto-shrink_100_100/0/1648824438936?e=1689206400&v=beta&t=214DBmAoIeNEprN0818Zkr2aMCKJ9W3S1b8sQiWIyCU"
                                 linkedinUrl="https://www.linkedin.com/in/ruancfaccin/"
-                                githubUrl=""
+                                githubUrl="https://github.com/ruanfaccin"
                                 role="RA: 081220029"
                             />
                             <Profile
                                 name="Gustavo Braz"
                                 imgUrl="https://media.licdn.com/dms/image/C4D03AQH9V5bew7kO3Q/profile-displayphoto-shrink_100_100/0/1660705233689?e=1689206400&v=beta&t=soG7l0BpG1mHavmr9lrE6BDI_F1rHwl1uI1YoYCZxgE"
                                 linkedinUrl="https://www.linkedin.com/in/braz-gustavo/"
-                                githubUrl=""
+                                githubUrl="https://github.com/brazgu"
                                 role="RA: 081220001"
                             />
                         </div>

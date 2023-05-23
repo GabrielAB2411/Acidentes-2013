@@ -1,18 +1,12 @@
 import React from "react";
 import DataTable, { TableStyles } from "react-data-table-component"
+import { Button, DatatableLoader, DatatableNoData, Input } from "../Index";
+import { FileCsv } from "@phosphor-icons/react"
 import { TableColumn } from "react-data-table-component";
 import { Accidents } from "../../types/Accidents";
+import { DatatableInfo } from "../../types/DatatableInfo";
 import useFetchAccidents from "../../hooks/useFetchAccidents";
-
-type DatatableInfoProps = {
-    estado: string,
-    data: string,
-    classificacao: string,
-    causa: string,
-    tipo: string,
-    mortos: number,
-    feridos: number,
-}[]
+import useDatatable from "../../hooks/useDatatable";
 
 interface DataRow {
     estado: string,
@@ -32,6 +26,7 @@ const customStyles: TableStyles = {
     },
     subHeader: {
         style: {
+            padding: "20px",
             borderTopLeftRadius: "15px",
             borderTopRightRadius: "15px",
             backgroundColor: "#1A1B4D",
@@ -52,6 +47,15 @@ const customStyles: TableStyles = {
             borderBottomWidth: "1px",
         },
     },
+    noData: {
+        style: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#ffffff",
+            backgroundColor: "#1A1B4D",
+        },
+    },
     pagination: {
         style: {
             borderBottomLeftRadius: "15px",
@@ -62,6 +66,14 @@ const customStyles: TableStyles = {
         pageButtonsStyle: {
             color: "#ffffff",
             fill: "#ffffff",
+        },
+    },
+    progress: {
+        style: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#1A1B4D",
         },
     },
 };
@@ -95,22 +107,25 @@ const datatableColumns: TableColumn<DataRow>[] = [
         name: "Feridos",
         selector: row => row.feridos,
     },
-]
+];
 
 const paginationComponentOptions = {
-    rowsPerPageText: 'Registros por página:',
-    rangeSeparatorText: 'de',
+    rowsPerPageText: "Registros por página:",
+    rangeSeparatorText: "de",
     noRowsPerPage: true,
     selectAllRowsItem: true,
-    selectAllRowsItemText: 'All',
-}
+    selectAllRowsItemText: "All",
+};
 
 export default function Datatable() {
+    const [filterText, setFilterText] = React.useState("");
     const [currentPage, setCurrentPage] = React.useState(1);
 
-    const {data, isLoading} = useFetchAccidents(currentPage)
+    const { downloadCSV } = useDatatable()
 
-    const datatableInfo: DatatableInfoProps = []
+    const { data, isLoading } = useFetchAccidents(currentPage);
+
+    const datatableInfo: DatatableInfo = [];
 
     data && data[0]?.accidents?.map((dt: Accidents) => (
         datatableInfo.push(
@@ -124,20 +139,48 @@ export default function Datatable() {
                 feridos: dt.feridos,
             }
         )
-    ))
+    ));
+
+    const filteredData = datatableInfo.filter(
+        item => item.estado && item.estado.toLowerCase().includes(filterText.toLowerCase()),
+    );
+
+    const InputMemo = React.useMemo(() => {
+        return (
+            <Input
+                id="search"
+                type="text"
+                placeholder="Busca por estado"
+                required autoComplete="off"
+                value={filterText}
+                onChange={e => setFilterText(e.target.value)} />
+        );
+    }, [filterText]);
 
     return (
         <DataTable
             columns={datatableColumns}
-            data={datatableInfo}
+            data={filteredData}
             highlightOnHover
             progressPending={isLoading}
+            progressComponent={<DatatableLoader />}
             pagination
             paginationServer
             paginationTotalRows={data && data[0].size}
             paginationComponentOptions={paginationComponentOptions}
             persistTableHead
             subHeader
+            subHeaderComponent={
+                <div>
+                    <Button
+                        icon={<FileCsv />}
+                        onClick={() => downloadCSV(datatableInfo)}>
+                        Exportar para CSV
+                    </Button>
+                    {InputMemo}
+                </div>
+            }
+            noDataComponent={<DatatableNoData search={filterText}/>}
             customStyles={customStyles}
             onChangePage={(page: number) => setCurrentPage(page)}
         />

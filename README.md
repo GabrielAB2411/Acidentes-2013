@@ -39,6 +39,7 @@ Lista de dependências para executar o projeto:
     - Data table component
     - React-Player
     - React-Spinners
+    - React-Phosphor
 
     Server:
     - .Net 6
