@@ -180,7 +180,7 @@ export default function Datatable() {
                     {InputMemo}
                 </div>
             }
-            noDataComponent={<DatatableNoData search={filterText}/>}
+            noDataComponent={<DatatableNoData/>}
             customStyles={customStyles}
             onChangePage={(page: number) => setCurrentPage(page)}
         />
