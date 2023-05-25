@@ -1,13 +1,80 @@
-CREATE FUNCTION ReplaceQuotations (@txt Varchar(100))
-RETURNS varchar(100) AS
-BEGIN
-   return replace(@txt, '"', '') 
-END
+create or alter procedure NormalizaBanco as
+  begin
+  SET IDENTITY_INSERT DatatranNormalizado ON;
+  		delete from DatatranNormalizado
+	begin
+		delete from DiaSemana
+		INSERT INTO DiaSemana (Dia)
+		select distinct dbo.ReplaceQuotations(["dia_semana"]) from datatran2013
+	end
 
-CREATE FUNCTION TransferData ()
-RETURNS bit AS
-BEGIN
-   SET IDENTITY_INSERT DatatranNormalizado ON;
+	begin
+		delete from CausaAcidente
+		INSERT INTO CausaAcidente (Causa)
+		select distinct dbo.ReplaceQuotations(["causa_acidente"]) from datatran2013
+	end
+
+	begin
+		delete from ClassificacaoAcidente
+		INSERT INTO ClassificacaoAcidente (Classificacao)
+		select distinct dbo.ReplaceQuotations(["classificacao_acidente"]) from datatran2013
+	end
+
+	begin
+		delete from CondicaoMeteorologica
+		INSERT INTO CondicaoMeteorologica (Condicao)
+		select distinct dbo.ReplaceQuotations(["condicao_metereologica"]) from datatran2013
+	end
+
+	begin
+		delete from FaseDia
+		INSERT INTO FaseDia (Fase)
+		select distinct dbo.ReplaceQuotations(["fase_dia"]) from datatran2013
+	end
+
+	begin
+		delete from Municipio
+		INSERT INTO Municipio (Municipio)
+		select distinct dbo.ReplaceQuotations(["municipio"]) from datatran2013
+	end
+
+	begin
+		delete from SentidoVia
+		INSERT INTO SentidoVia(Sentido)
+		select distinct dbo.ReplaceQuotations(["sentido_via"]) from datatran2013
+
+	begin
+		delete from TipoAcidente
+		INSERT INTO TipoAcidente (Tipo)
+		select distinct dbo.ReplaceQuotations(["tipo_acidente"]) from datatran2013
+	end
+
+	begin
+		delete from TipoPista
+		INSERT INTO TipoPista (Tipo)
+		select distinct dbo.ReplaceQuotations(["tipo_pista"]) from datatran2013
+	end
+
+	begin
+		delete from TracadoVia
+		INSERT INTO TracadoVia(Tracado)
+		select distinct dbo.ReplaceQuotations(["tracado_via"]) from datatran2013
+	end
+
+	begin
+		delete from UF
+		INSERT INTO UF (UF)
+		select distinct dbo.ReplaceQuotations(["uf"]) from datatran2013
+	end
+
+	begin
+		delete from UsoSolo
+		INSERT INTO UsoSolo (Uso)
+		select distinct dbo.ReplaceQuotations(["uso_solo"]) from datatran2013
+	end
+
+	begin
+		BEGIN
 		declare @id varchar(10), @data_inversa varchar(60), @dia_semana varchar(10), @horario varchar(30), @uf varchar(10), @br varchar(20), @km varchar(10),
 		@municipio varchar(60), @causa_acidente varchar (100), @tipo_acidente varchar(60), @classificacao_acidente varchar(60), @fase_dia varchar(30),
 		@sentido_via varchar(30), @condicao_meteorologica varchar(30), @tipo_pista varchar(30), @tracado_via varchar(30), @uso_solo varchar(20),
@@ -39,7 +106,7 @@ BEGIN
 		,["ilesos"]
 		,["ignorados"]
 		,["feridos"]
-		,["veiculos"] from DatatranOriginal
+		,["veiculos"] from datatran2013
 
 		OPEN DatatranOriginalToNormalizado
 
@@ -81,95 +148,10 @@ BEGIN
 
 		CLOSE DatatranOriginalToNormalizado
 		DEALLOCATE DatatranOriginalToNormalizado
-
-		if @@ERROR <> 0 return 0
-		else return 1
-END
-
-create or alter procedure NormalizaBanco as
-  begin
-	
-	begin
-		delete from DiaSemana
-		INSERT INTO DiaSemana (Dia)
-		select distinct dbo.ReplaceQuotations(["dia_semana"]) from DatatranOriginal
 	end
-
-	begin
-		delete from CausaAcidente
-		INSERT INTO CausaAcidente (Causa)
-		select distinct dbo.ReplaceQuotations(["causa_acidente"]) from DatatranOriginal
 	end
-
-	begin
-		delete from ClassificacaoAcidente
-		INSERT INTO ClassificacaoAcidente (Classificacao)
-		select distinct dbo.ReplaceQuotations(["classificacao_acidente"]) from DatatranOriginal
 	end
-
-	begin
-		delete from CondicaoMeteorologica
-		INSERT INTO CondicaoMeteorologica (Condicao)
-		select distinct dbo.ReplaceQuotations(["condicao_metereologica"]) from DatatranOriginal
 	end
-
-	begin
-		delete from FaseDia
-		INSERT INTO FaseDia (Fase)
-		select distinct dbo.ReplaceQuotations(["fase_dia"]) from DatatranOriginal
-	end
-
-	begin
-		delete from Municipio
-		INSERT INTO Municipio (Municipio)
-		select distinct dbo.ReplaceQuotations(["municipio"]) from DatatranOriginal
-	end
-
-	begin
-		delete from SentidoVia
-		INSERT INTO SentidoVia(Sentido)
-		select distinct dbo.ReplaceQuotations(["sentido_via"]) from DatatranOriginal
-	end
-
-	begin
-		delete from TipoAcidente
-		INSERT INTO TipoAcidente (Tipo)
-		select distinct dbo.ReplaceQuotations(["tipo_acidente"]) from DatatranOriginal
-	end
-
-	begin
-		delete from TipoPista
-		INSERT INTO TipoPista (Tipo)
-		select distinct dbo.ReplaceQuotations(["tipo_pista"]) from DatatranOriginal
-	end
-
-	begin
-		delete from TracadoVia
-		INSERT INTO TracadoVia(Tracado)
-		select distinct dbo.ReplaceQuotations(["tracado_via"]) from DatatranOriginal
-	end
-
-	begin
-		delete from UF
-		INSERT INTO UF (UF)
-		select distinct dbo.ReplaceQuotations(["uf"]) from DatatranOriginal
-	end
-
-	begin
-		delete from UsoSolo
-		INSERT INTO UsoSolo (Uso)
-		select distinct dbo.ReplaceQuotations(["uso_solo"]) from DatatranOriginal
-	end
-
-	begin
-		delete from DatatranNormalizado
-		declare @result bit = dbo.TransferData()
-
-		if @result = 0 print 'Erro na transferência de dados!'
-		else print 'Tranferência de dados executada com êxito!'
-	end
-
-  end
   go
 
   exec NormalizaBanco
